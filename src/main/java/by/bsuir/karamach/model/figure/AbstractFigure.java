@@ -1,4 +1,4 @@
-package by.bsuir.karamach.model;
+package by.bsuir.karamach.model.figure;
 
 import java.io.Serializable;
 

@@ -1,7 +1,7 @@
-package by.bsuir.karamach.model.impl;
+package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.AbstractFigure;
-import by.bsuir.karamach.model.basic.Point;
+import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.basic.Point;
 
 import java.util.Objects;
 

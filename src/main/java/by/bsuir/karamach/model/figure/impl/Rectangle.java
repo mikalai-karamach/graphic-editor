@@ -1,21 +1,21 @@
-package by.bsuir.karamach.model.impl;
+package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.AbstractFigure;
-import by.bsuir.karamach.model.basic.Point;
+import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.basic.Point;
 
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Ellipse extends AbstractFigure {
-    private static final long serialVersionUID = -5989983302590673296L;
+public class Rectangle extends AbstractFigure {
+    private static final long serialVersionUID = 8363803837365699462L;
 
     private Point leftTopCorner;
     private Point rightBotCorner;
 
-    public Ellipse() {
+    public Rectangle() {
     }
 
-    public Ellipse(Point leftTopCorner, Point rightBotCorner) {
+    public Rectangle(Point leftTopCorner, Point rightBotCorner) {
         this.leftTopCorner = leftTopCorner;
         this.rightBotCorner = rightBotCorner;
     }
@@ -46,9 +46,9 @@ public class Ellipse extends AbstractFigure {
             return false;
         }
 
-        Ellipse ellipse = (Ellipse) o;
-        return Objects.equals(getLeftTopCorner(), ellipse.getLeftTopCorner()) &&
-                Objects.equals(getRightBotCorner(), ellipse.getRightBotCorner());
+        Rectangle rectangle = (Rectangle) o;
+        return Objects.equals(getLeftTopCorner(), rectangle.getLeftTopCorner()) &&
+                Objects.equals(getRightBotCorner(), rectangle.getRightBotCorner());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Ellipse extends AbstractFigure {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Ellipse.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", Rectangle.class.getSimpleName() + "[", "]")
                 .add("leftTopCorner=" + leftTopCorner)
                 .add("rightBotCorner=" + rightBotCorner)
                 .toString();
