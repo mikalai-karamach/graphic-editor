@@ -1,21 +1,22 @@
 package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Circle extends AbstractFigure {
+public class Circle implements Printable {
     private static final long serialVersionUID = 6946080811820833527L;
 
     private Point center;
-    private double radius;
+    private int radius;
 
     public Circle() {
     }
 
-    public Circle(Point center, double radius) {
+    public Circle(Point center, int radius) {
         this.center = center;
         this.radius = radius;
     }
@@ -28,11 +29,11 @@ public class Circle extends AbstractFigure {
         this.center = center;
     }
 
-    public double getRadius() {
+    public int getRadius() {
         return radius;
     }
 
-    public void setRadius(double radius) {
+    public void setRadius(int radius) {
         this.radius = radius;
     }
 
@@ -62,5 +63,10 @@ public class Circle extends AbstractFigure {
                 .add("center=" + center)
                 .add("radius=" + radius)
                 .toString();
+    }
+
+    @Override
+    public void print(Graphics2D graphics2D) {
+        graphics2D.drawOval(center.getX(), center.getY(), radius, radius);
     }
 }

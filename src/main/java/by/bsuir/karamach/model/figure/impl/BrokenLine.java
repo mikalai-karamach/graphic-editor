@@ -1,13 +1,14 @@
 package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class BrokenLine extends AbstractFigure {
+public class BrokenLine implements Printable {
     private static final long serialVersionUID = 1090821929829893663L;
 
     private List<Point> points;
@@ -52,4 +53,17 @@ public class BrokenLine extends AbstractFigure {
                 .add("points=" + points)
                 .toString();
     }
+
+    @Override
+    public void print(Graphics2D graphics2D) {
+        for (int i = 0; i < points.size() - 1; i++) {
+            Point pointFrom = points.get(i);
+            Point pointTo = points.get(i + 1);
+
+            graphics2D.drawLine(pointFrom.getX(), pointFrom.getY(), pointTo.getX(), pointTo.getY());
+
+        }
+
+    }
+
 }

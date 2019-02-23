@@ -1,12 +1,13 @@
 package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Square extends AbstractFigure {
+public class Square implements Printable {
     private static final long serialVersionUID = -5682594565139550253L;
 
     private Point leftTopPoint;
@@ -62,5 +63,12 @@ public class Square extends AbstractFigure {
                 .add("leftTopPoint=" + leftTopPoint)
                 .add("rightBotPoint=" + rightBotPoint)
                 .toString();
+    }
+
+    @Override
+    public void print(Graphics2D graphics2D) {
+        int width = Math.abs(leftTopPoint.getX() - rightBotPoint.getX());
+        int height = Math.abs(rightBotPoint.getY() - leftTopPoint.getY());
+        graphics2D.drawRect(leftTopPoint.getX(), leftTopPoint.getY(), width, height);
     }
 }

@@ -1,24 +1,24 @@
 package by.bsuir.karamach.model.store;
 
-import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.Printable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FigureArrayList implements FigureRepository<AbstractFigure> {
+public class FigureArrayList implements FigureRepository<Printable> {
 
-    private List<AbstractFigure> figures = new ArrayList<>();
+    private List<Printable> figures = new ArrayList<>();
 
     public FigureArrayList() {
     }
 
     @Override
-    public void save(AbstractFigure figure) {
+    public void save(Printable figure) {
         figures.add(figure);
     }
 
     @Override
-    public void remove(AbstractFigure figure) {
+    public void remove(Printable figure) {
         figures.remove(figure);
     }
 
@@ -28,7 +28,7 @@ public class FigureArrayList implements FigureRepository<AbstractFigure> {
     }
 
     @Override
-    public List<AbstractFigure> getAll() {
+    public List<Printable> getAll() {
         return figures;
     }
 }
