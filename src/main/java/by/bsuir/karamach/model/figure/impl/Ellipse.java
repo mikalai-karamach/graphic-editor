@@ -1,39 +1,50 @@
 package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Ellipse extends AbstractFigure {
+public class Ellipse implements Printable {
     private static final long serialVersionUID = -5989983302590673296L;
 
-    private Point leftTopCorner;
-    private Point rightBotCorner;
+    private Point center;
+    private int width;
+    private int height;
 
     public Ellipse() {
     }
 
-    public Ellipse(Point leftTopCorner, Point rightBotCorner) {
-        this.leftTopCorner = leftTopCorner;
-        this.rightBotCorner = rightBotCorner;
+    public Ellipse(Point center, int width, int height) {
+        this.center = center;
+        this.width = width;
+        this.height = height;
     }
 
-    public Point getLeftTopCorner() {
-        return leftTopCorner;
+    public Point getCenter() {
+        return center;
     }
 
-    public void setLeftTopCorner(Point leftTopCorner) {
-        this.leftTopCorner = leftTopCorner;
+    public void setCenter(Point center) {
+        this.center = center;
     }
 
-    public Point getRightBotCorner() {
-        return rightBotCorner;
+    public int getWidth() {
+        return width;
     }
 
-    public void setRightBotCorner(Point rightBotCorner) {
-        this.rightBotCorner = rightBotCorner;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     @Override
@@ -47,20 +58,27 @@ public class Ellipse extends AbstractFigure {
         }
 
         Ellipse ellipse = (Ellipse) o;
-        return Objects.equals(getLeftTopCorner(), ellipse.getLeftTopCorner()) &&
-                Objects.equals(getRightBotCorner(), ellipse.getRightBotCorner());
+        return getWidth() == ellipse.getWidth() &&
+                getHeight() == ellipse.getHeight() &&
+                Objects.equals(getCenter(), ellipse.getCenter());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLeftTopCorner(), getRightBotCorner());
+        return Objects.hash(getCenter(), getWidth(), getHeight());
     }
 
     @Override
     public String toString() {
         return new StringJoiner(", ", Ellipse.class.getSimpleName() + "[", "]")
-                .add("leftTopCorner=" + leftTopCorner)
-                .add("rightBotCorner=" + rightBotCorner)
+                .add("center=" + center)
+                .add("width=" + width)
+                .add("height=" + height)
                 .toString();
+    }
+
+    @Override
+    public void print(Graphics2D graphics2D) {
+        graphics2D.drawOval(center.getX(), center.getY(), width, height);
     }
 }

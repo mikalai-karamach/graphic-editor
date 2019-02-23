@@ -1,12 +1,13 @@
 package by.bsuir.karamach.model.figure.impl;
 
-import by.bsuir.karamach.model.figure.AbstractFigure;
+import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Rectangle extends AbstractFigure {
+public class Rectangle implements Printable {
     private static final long serialVersionUID = 8363803837365699462L;
 
     private Point leftTopCorner;
@@ -62,5 +63,12 @@ public class Rectangle extends AbstractFigure {
                 .add("leftTopCorner=" + leftTopCorner)
                 .add("rightBotCorner=" + rightBotCorner)
                 .toString();
+    }
+
+    @Override
+    public void print(Graphics2D graphics2D) {
+        int width = Math.abs(leftTopCorner.getX() - rightBotCorner.getX());
+        int height = Math.abs(rightBotCorner.getY() - leftTopCorner.getY());
+        graphics2D.drawRect(leftTopCorner.getX(), leftTopCorner.getY(), width, height);
     }
 }
