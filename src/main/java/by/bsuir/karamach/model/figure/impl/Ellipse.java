@@ -79,6 +79,6 @@ public class Ellipse implements Printable {
 
     @Override
     public void print(Graphics2D graphics2D) {
-        graphics2D.drawOval(center.getX(), center.getY(), width, height);
+        graphics2D.drawOval(center.getX() - width, center.getY() - height, width * 2, height * 2);
     }
 }

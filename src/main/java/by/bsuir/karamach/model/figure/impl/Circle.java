@@ -67,6 +67,6 @@ public class Circle implements Printable {
 
     @Override
     public void print(Graphics2D graphics2D) {
-        graphics2D.drawOval(center.getX(), center.getY(), radius, radius);
+        graphics2D.drawOval(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2);
     }
 }
