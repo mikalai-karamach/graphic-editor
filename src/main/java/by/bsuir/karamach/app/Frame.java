@@ -1,36 +1,33 @@
 package by.bsuir.karamach.app;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Frame extends JFrame {
-    private static final String TITLE = "Graphic-editor";
-    private static final int APP_WIDTH = 400;
-    private static final int APP_HEIGHT = 400;
+
+    private DrawPanel drawPanel;
 
 
-    public Frame() {
+    public Frame(String title, int width, int height) {
+
+        setTitle(title);
+        setSize(width, height);
+
         initUI();
     }
 
-    public static void main(String[] args) {
-
-        EventQueue.invokeLater(() -> {
-            var ex = new Frame();
-            ex.setVisible(true);
-        });
-
-    }
 
     private void initUI() {
 
         var DrawPanel = new DrawPanel();
         add(DrawPanel);
 
-        setTitle(TITLE);
-        setSize(APP_WIDTH, APP_HEIGHT);
+        this.drawPanel = DrawPanel;
 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    public DrawPanel getDrawPanel() {
+        return drawPanel;
     }
 }
