@@ -4,12 +4,15 @@ import by.bsuir.karamach.gui.Frame;
 import by.bsuir.karamach.gui.ToolkitPanel;
 import by.bsuir.karamach.model.figure.basic.Point;
 import by.bsuir.karamach.model.figure.impl.*;
+import by.bsuir.karamach.util.BsonWorker;
 import by.bsuir.karamach.util.ParserException;
 import by.bsuir.karamach.util.UICoordinatesParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +40,24 @@ public class Initializer {
     @Value("${enter.coordinates.message}")
     private String ENTER_COORDINATES_MESSAGE;
 
+    private final BsonWorker bsonWorker;
+
     @Value("${button.default.height}")
     private int BUTTON_HEIGHT;
 
     @Value("${button.default.width}")
     private int BUTTON_WIDTH;
 
+
     private Frame frame;
     private ToolkitPanel toolkitPanel;
+    @Value("${enter.file.name.message}")
+    private String ENTER_FILE_NAME;
+
+    @Autowired
+    public Initializer(BsonWorker bsonWorker) {
+        this.bsonWorker = bsonWorker;
+    }
 
 
     public void initGUI() {
@@ -52,6 +65,16 @@ public class Initializer {
         toolkitPanel = new ToolkitPanel(TOOLKIT_TITTLE, TOOLKIT_WINDOW_WIDTH, TOOLKIT_WINDOW_HEIGHT);
         toolkitPanel.setLayout(null);
 
+        addComponents();
+
+        toolkitPanel.repaint();
+
+        frame.setVisible(true);
+
+        toolkitPanel.setVisible(true);
+    }
+
+    private void addComponents() {
         addRectangleButton();
 
         addCircleButton();
@@ -64,12 +87,74 @@ public class Initializer {
 
         addBrokenLineButton();
 
+        addSerializeButton();
 
-        toolkitPanel.repaint();
+        addDeserializeButton();
 
-        frame.setVisible(true);
+        addClearAllButton();
+    }
 
-        toolkitPanel.setVisible(true);
+    private void addClearAllButton() {
+        JButton clearAll = new JButton("Clear All");
+        clearAll.setBounds(150, 65, BUTTON_WIDTH + 50, BUTTON_HEIGHT);
+        clearAll.setLayout(null);
+
+        clearAll.addActionListener(event -> {
+            frame.getDrawPanel().getFigureList().clear();
+            frame.getDrawPanel().repaint();
+        });
+        toolkitPanel.getContentPane().add(clearAll);
+    }
+
+    private void addDeserializeButton() {
+        JButton deserializeButton = new JButton("DeSerialize from file");
+        deserializeButton.setBounds(150, 120, BUTTON_WIDTH + 50, BUTTON_HEIGHT);
+        deserializeButton.setLayout(null);
+
+        deserializeButton.addActionListener(event -> {
+            String message = JOptionPane.showInputDialog(ENTER_FILE_NAME);
+
+            if ((message != null) && (!message.isEmpty())) {
+                try {
+                    frame.getDrawPanel().setArrayList(bsonWorker.deserializeFromFile(message));
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+
+                frame.repaint();
+                JOptionPane.showMessageDialog(null, "Success");
+
+            } else {
+                JOptionPane.showMessageDialog(null, "File name can't be empty or null");
+            }
+
+
+        });
+        toolkitPanel.getContentPane().add(deserializeButton);
+    }
+
+    private void addSerializeButton() {
+        JButton serializeButton = new JButton("Serialize to file");
+        serializeButton.setBounds(150, 175, BUTTON_WIDTH + 50, BUTTON_HEIGHT);
+        serializeButton.setLayout(null);
+
+        serializeButton.addActionListener(event -> {
+            String message = JOptionPane.showInputDialog(ENTER_FILE_NAME);
+
+            if ((message != null) && (!message.isEmpty())) {
+                try {
+                    bsonWorker.serializeToFile(frame.getDrawPanel().getFigureList(), message);
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+
+                JOptionPane.showMessageDialog(null, "Success");
+            } else {
+                JOptionPane.showMessageDialog(null, "File name can't be empty or null");
+            }
+
+        });
+        toolkitPanel.getContentPane().add(serializeButton);
     }
 
     private void addBrokenLineButton() {

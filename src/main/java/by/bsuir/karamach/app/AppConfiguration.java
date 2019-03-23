@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource("classpath:gui.properties")
+@PropertySource("classpath:application.properties")
 @ComponentScan("by.bsuir.karamach")
 public class AppConfiguration {
 

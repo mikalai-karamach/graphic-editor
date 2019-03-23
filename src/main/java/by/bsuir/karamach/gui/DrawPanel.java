@@ -1,15 +1,18 @@
 package by.bsuir.karamach.gui;
 
 import by.bsuir.karamach.model.figure.Printable;
-import by.bsuir.karamach.model.store.FigureArrayList;
+import by.bsuir.karamach.model.store.FigureList;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class DrawPanel extends JPanel {
 
-    private FigureArrayList arrayList = new FigureArrayList();
+    private FigureList arrayList = new FigureList();
 
+    public void setArrayList(FigureList arrayList) {
+        this.arrayList = arrayList;
+    }
 
     private void doDrawing(Graphics g) {
 
@@ -18,7 +21,7 @@ public class DrawPanel extends JPanel {
 
         g2d.setColor(Color.RED);
 
-        for (Printable printable : arrayList.getAll()) {
+        for (Printable printable : arrayList.getFigures()) {
             printable.print(g2d);
         }
     }
@@ -31,7 +34,7 @@ public class DrawPanel extends JPanel {
     }
 
 
-    public FigureArrayList getFigureList() {
+    public FigureList getFigureList() {
         return arrayList;
     }
 }

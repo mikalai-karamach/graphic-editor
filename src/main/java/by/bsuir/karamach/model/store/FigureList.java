@@ -5,11 +5,11 @@ import by.bsuir.karamach.model.figure.Printable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FigureArrayList implements FigureRepository<Printable> {
+public class FigureList implements FigureRepository<Printable> {
 
     private List<Printable> figures = new ArrayList<>();
 
-    public FigureArrayList() {
+    public FigureList() {
     }
 
     @Override
@@ -27,8 +27,12 @@ public class FigureArrayList implements FigureRepository<Printable> {
         figures.clear();
     }
 
-    @Override
-    public List<Printable> getAll() {
+    public List<Printable> getFigures() {
         return figures;
     }
+
+    public void setFigures(List<Printable> figures) {
+        this.figures = figures;
+    }
+
 }
