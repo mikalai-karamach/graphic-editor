@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Point implements Serializable {
-    private static final long serialVersionUID = 7294313470147332958L;
+    private static final long serialVersionUID = 4407135450846499769L;
 
     private int x;
     private int y;

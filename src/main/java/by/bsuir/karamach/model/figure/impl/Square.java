@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Square implements Printable {
-    private static final long serialVersionUID = -5682594565139550253L;
+    private static final long serialVersionUID = 383058727448626501L;
 
     private Point leftTopPoint;
     private Point rightBotPoint;
@@ -69,6 +69,7 @@ public class Square implements Printable {
     public void print(Graphics2D graphics2D) {
         int width = Math.abs(leftTopPoint.getX() - rightBotPoint.getX());
         int height = Math.abs(rightBotPoint.getY() - leftTopPoint.getY());
+
         graphics2D.drawRect(leftTopPoint.getX(), leftTopPoint.getY(), width, height);
     }
 }

@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Circle implements Printable {
-    private static final long serialVersionUID = 6946080811820833527L;
+    private static final long serialVersionUID = -3339312817839470058L;
 
     private Point center;
     private int radius;

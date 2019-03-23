@@ -51,7 +51,7 @@ public final class UICoordinatesParser {
                 coordinates.add(Integer.valueOf(lexeme));
             }
 
-            if (coordinates.size() % 2 == 1) {
+            if (isEvenSize(coordinates)) {
                 throw new ParserException("Invalid amount of parameters");
             }
 
@@ -63,5 +63,9 @@ public final class UICoordinatesParser {
         }
 
         return coordinates;
+    }
+
+    private static boolean isEvenSize(List<Integer> coordinates) {
+        return coordinates.size() % 2 == 1;
     }
 }

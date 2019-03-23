@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Rectangle implements Printable {
-    private static final long serialVersionUID = 8363803837365699462L;
+    private static final long serialVersionUID = -7384927166264749093L;
 
     private Point leftTopCorner;
     private Point rightBotCorner;
@@ -69,6 +69,7 @@ public class Rectangle implements Printable {
     public void print(Graphics2D graphics2D) {
         int width = Math.abs(leftTopCorner.getX() - rightBotCorner.getX());
         int height = Math.abs(rightBotCorner.getY() - leftTopCorner.getY());
+
         graphics2D.drawRect(leftTopCorner.getX(), leftTopCorner.getY(), width, height);
     }
 }

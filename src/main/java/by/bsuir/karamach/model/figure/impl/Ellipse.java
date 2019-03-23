@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Ellipse implements Printable {
-    private static final long serialVersionUID = -5989983302590673296L;
+    private static final long serialVersionUID = 7276418754703032726L;
 
     private Point center;
     private int width;
