@@ -1,4 +1,4 @@
-package by.bsuir.karamach.app;
+package by.bsuir.karamach.gui;
 
 import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.store.FigureArrayList;

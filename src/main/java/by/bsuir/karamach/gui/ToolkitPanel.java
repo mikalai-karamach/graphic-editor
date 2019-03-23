@@ -1,4 +1,4 @@
-package by.bsuir.karamach.app;
+package by.bsuir.karamach.gui;
 
 import javax.swing.*;
 import java.awt.*;
