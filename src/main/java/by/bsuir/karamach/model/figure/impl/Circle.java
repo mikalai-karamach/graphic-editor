@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Circle implements Printable {
-    private static final long serialVersionUID = 6946080811820833527L;
+    private static final long serialVersionUID = -3339312817839470058L;
 
     private Point center;
     private int radius;
@@ -67,6 +67,6 @@ public class Circle implements Printable {
 
     @Override
     public void print(Graphics2D graphics2D) {
-        graphics2D.drawOval(center.getX(), center.getY(), radius, radius);
+        graphics2D.drawOval(center.getX() - radius, center.getY() - radius, radius * 2, radius * 2);
     }
 }

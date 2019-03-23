@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.Objects;
 
 public class Line implements Printable {
-    private static final long serialVersionUID = -8655047447318746914L;
+    private static final long serialVersionUID = 867492637570722375L;
 
     private Point start;
     private Point end;

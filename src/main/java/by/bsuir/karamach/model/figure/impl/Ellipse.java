@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Ellipse implements Printable {
-    private static final long serialVersionUID = -5989983302590673296L;
+    private static final long serialVersionUID = 7276418754703032726L;
 
     private Point center;
     private int width;
@@ -79,6 +79,6 @@ public class Ellipse implements Printable {
 
     @Override
     public void print(Graphics2D graphics2D) {
-        graphics2D.drawOval(center.getX(), center.getY(), width, height);
+        graphics2D.drawOval(center.getX() - width, center.getY() - height, width * 2, height * 2);
     }
 }

@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class BrokenLine implements Printable {
-    private static final long serialVersionUID = 1090821929829893663L;
+    private static final long serialVersionUID = -7515622801408129698L;
 
     private List<Point> points;
 
