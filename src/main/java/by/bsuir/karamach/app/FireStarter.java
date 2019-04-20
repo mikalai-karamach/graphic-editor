@@ -5,10 +5,11 @@ import by.bsuir.karamach.app.loader.PluginLoader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class FireStarter {
-    public static void main(String[] args) throws LoaderException {
+    public static void main(String[] args) throws LoaderException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfiguration.class);
 

@@ -12,12 +12,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class PluginLoader extends ClassLoader {
 
     private static final Logger logger = LogManager.getLogger(PluginLoader.class);
     private static final int BEGIN_INDEX = 0;
+
     @Value("${plugins.class.files.extension}")
     private final String CLASS_EXTENSION = ".class";
     @Value("${plugins.package.name}")
@@ -36,7 +38,7 @@ public class PluginLoader extends ClassLoader {
 
         try {
 
-            Path path = Paths.get(getClass().getClassLoader().getResource(pathToFiles).getFile() + "/" + className + CLASS_EXTENSION);
+            Path path = Paths.get(Objects.requireNonNull(getClass().getClassLoader().getResource(pathToFiles)).getFile() + "/" + className + CLASS_EXTENSION);
 
             filePayload = Files.readAllBytes(path);
 
@@ -52,7 +54,7 @@ public class PluginLoader extends ClassLoader {
 
     public List<Class> loadPlugins() throws LoaderException {
 
-        File dir = new File(getClass().getClassLoader().getResource(pathToFiles).getFile());
+        File dir = new File(Objects.requireNonNull(getClass().getClassLoader().getResource(pathToFiles)).getFile());
         String[] modules = dir.list();
 
         if (modules == null) {

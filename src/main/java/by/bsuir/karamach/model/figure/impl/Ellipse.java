@@ -1,14 +1,20 @@
 package by.bsuir.karamach.model.figure.impl;
 
+import by.bsuir.karamach.gui.Frame;
+import by.bsuir.karamach.model.figure.Plugin;
 import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
+import by.bsuir.karamach.util.ParserException;
+import by.bsuir.karamach.util.UICoordinatesParser;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Ellipse implements Printable {
-    private static final long serialVersionUID = 7276418754703032726L;
+public class Ellipse extends Plugin implements Printable {
+    private static final long serialVersionUID = 4676735044770176830L;
 
     private Point center;
     private int width;
@@ -80,5 +86,38 @@ public class Ellipse implements Printable {
     @Override
     public void print(Graphics2D graphics2D) {
         graphics2D.drawOval(center.getX() - width, center.getY() - height, width * 2, height * 2);
+    }
+
+    @Override
+    public void renderOnFrame(Frame frameToPaint, JFrame frameToRender) {
+        JButton ellipse = new JButton(getClass().getSimpleName());
+        ellipse.setBounds(10, 120, 100, 50);
+        ellipse.setLayout(null);
+
+        ellipse.addActionListener(event -> {
+            int amountOfCoordinatesExpected = 4;
+
+
+            String message = JOptionPane.showInputDialog(
+                    "Enter coordinates (" + amountOfCoordinatesExpected + ")");
+
+            if ((message != null) && (!message.isEmpty())) {
+
+                List<Integer> coordinates;
+                try {
+                    coordinates = UICoordinatesParser.parseToCoordinates(message, amountOfCoordinatesExpected);
+
+                    Point point1 = new Point(coordinates.get(0), coordinates.get(1));
+
+                    frameToPaint.getDrawPanel().getFigureList().save(new Ellipse(point1, coordinates.get(2), coordinates.get(3)));
+                    frameToPaint.repaint();
+                } catch (ParserException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+
+            }
+
+        });
+        frameToRender.getContentPane().add(ellipse);
     }
 }

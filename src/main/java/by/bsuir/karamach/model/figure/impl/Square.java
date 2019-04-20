@@ -1,14 +1,20 @@
 package by.bsuir.karamach.model.figure.impl;
 
+import by.bsuir.karamach.gui.Frame;
+import by.bsuir.karamach.model.figure.Plugin;
 import by.bsuir.karamach.model.figure.Printable;
 import by.bsuir.karamach.model.figure.basic.Point;
+import by.bsuir.karamach.util.ParserException;
+import by.bsuir.karamach.util.UICoordinatesParser;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Square implements Printable {
-    private static final long serialVersionUID = 383058727448626501L;
+public class Square extends Plugin implements Printable {
+    private static final long serialVersionUID = -1248098980465687912L;
 
     private Point leftTopPoint;
     private Point rightBotPoint;
@@ -71,5 +77,39 @@ public class Square implements Printable {
         int height = Math.abs(rightBotPoint.getY() - leftTopPoint.getY());
 
         graphics2D.drawRect(leftTopPoint.getX(), leftTopPoint.getY(), width, height);
+    }
+
+    @Override
+    public void renderOnFrame(Frame frameToPaint, JFrame frameToRender) {
+        JButton square = new JButton(getClass().getSimpleName());
+        square.setBounds(10, 175, 100, 50);
+        square.setLayout(null);
+
+        square.addActionListener(event -> {
+            int amountOfCoordinatesExpected = 4;
+
+
+            String message = JOptionPane.showInputDialog(
+                    "Enter coordinates(" + amountOfCoordinatesExpected + ")");
+
+            if ((message != null) && (!message.isEmpty())) {
+
+                List<Integer> coordinates;
+                try {
+                    coordinates = UICoordinatesParser.parseToCoordinates(message, amountOfCoordinatesExpected);
+
+                    Point point1 = new Point(coordinates.get(0), coordinates.get(1));
+                    Point point2 = new Point(coordinates.get(2), coordinates.get(3));
+
+                    frameToPaint.getDrawPanel().getFigureList().save(new Square(point1, point2));
+                    frameToPaint.repaint();
+                } catch (ParserException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+
+            }
+
+        });
+        frameToRender.getContentPane().add(square);
     }
 }
