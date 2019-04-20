@@ -59,7 +59,6 @@ public final class UICoordinatesParser {
 
             errorMessage = e.getMessage();
             throw new ParserException("Number format exception: " + errorMessage);
-
         }
 
         return coordinates;

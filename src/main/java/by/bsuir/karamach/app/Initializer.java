@@ -40,19 +40,20 @@ public class Initializer {
     @Value("${enter.coordinates.message}")
     private String ENTER_COORDINATES_MESSAGE;
 
-    private final BsonWorker bsonWorker;
-
     @Value("${button.default.height}")
     private int BUTTON_HEIGHT;
 
     @Value("${button.default.width}")
     private int BUTTON_WIDTH;
 
+    @Value("${enter.file.name.message}")
+    private String ENTER_FILE_NAME;
+
+    private final BsonWorker bsonWorker;
 
     private Frame frame;
     private ToolkitPanel toolkitPanel;
-    @Value("${enter.file.name.message}")
-    private String ENTER_FILE_NAME;
+
 
     @Autowired
     public Initializer(BsonWorker bsonWorker) {
@@ -60,12 +61,12 @@ public class Initializer {
     }
 
 
-    public void initGUI() {
+    public void initGUI(List<Class> figureClasses) {
         frame = new Frame(APP_NAME, MAIN_WINDOW_WIDTH, MAIN_WINDOW_HEIGHT);
         toolkitPanel = new ToolkitPanel(TOOLKIT_TITTLE, TOOLKIT_WINDOW_WIDTH, TOOLKIT_WINDOW_HEIGHT);
         toolkitPanel.setLayout(null);
 
-        addComponents();
+        addComponents(figureClasses);
 
         toolkitPanel.repaint();
 
@@ -74,19 +75,33 @@ public class Initializer {
         toolkitPanel.setVisible(true);
     }
 
-    private void addComponents() {
-        addRectangleButton();
+    private void addComponents(List<Class> figureClasses) {
 
-        addCircleButton();
+        for (Class figureClass : figureClasses) {
+            if (figureClass.getName().equals(Rectangle.class.getName())) {
+                addRectangleButton();
+            }
 
-        addEllipseButton();
+            if (figureClass.getName().equals(Circle.class.getName())) {
+                addCircleButton();
+            }
 
-        addSquareButton();
+            if (figureClass.getName().equals(Ellipse.class.getName())) {
+                addEllipseButton();
+            }
 
-        addLineButton();
+            if (figureClass.getName().equals(Square.class.getName())) {
+                addSquareButton();
+            }
 
-        addBrokenLineButton();
+            if (figureClass.getName().equals(Line.class.getName())) {
+                addLineButton();
+            }
 
+            if (figureClass.getName().equals(BrokenLine.class.getName())) {
+                addBrokenLineButton();
+            }
+        }
         addSerializeButton();
 
         addDeserializeButton();
