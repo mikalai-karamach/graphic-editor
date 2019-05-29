@@ -3,7 +3,10 @@ package by.bsuir.karamach.app;
 import by.bsuir.karamach.gui.Frame;
 import by.bsuir.karamach.gui.ToolkitPanel;
 import by.bsuir.karamach.model.figure.Plugin;
+import by.bsuir.karamach.model.store.FigureList;
 import by.bsuir.karamach.util.BsonWorker;
+import by.bsuir.karamach.util.FigureClassesReader;
+import com.fasterxml.jackson.databind.exc.InvalidTypeIdException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -12,6 +15,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.NoSuchFileException;
 import java.util.List;
 
 @Component
@@ -46,6 +50,9 @@ public class Initializer {
 
     @Value("${enter.file.name.message}")
     private String ENTER_FILE_NAME;
+
+    @Value("${enter.figure.name.message}")
+    private String ENTER_FIGURE_NAME;
 
     private final BsonWorker bsonWorker;
 
@@ -90,6 +97,72 @@ public class Initializer {
         addDeserializeButton();
 
         addClearAllButton();
+
+        addSaveFigureButton();
+
+        JButton loadUserClass = new JButton("load figure");
+        loadUserClass.setBounds(150, 285, BUTTON_WIDTH + 50, BUTTON_HEIGHT);
+        loadUserClass.setLayout(null);
+
+        loadUserClass.addActionListener(event -> {
+            JOptionPane.showMessageDialog(null, FigureClassesReader.readAllFigures("data/classes/"));
+
+            String message = JOptionPane.showInputDialog(ENTER_FIGURE_NAME);
+
+            if ((message != null) && (!message.isEmpty())) {
+                try {
+                    FigureList arrayList = bsonWorker.deserializeFromFile("/classes/" + message);
+
+
+                    frame.getDrawPanel().setArrayList(arrayList);
+                    JOptionPane.showMessageDialog(null, "Success");
+
+                } catch (InvalidTypeIdException e) {
+                    JOptionPane.showMessageDialog(null, "Unable to find required plugins." +
+                            "\nPlease check the connected plugins.");
+                } catch (NoSuchFileException e) {
+                    JOptionPane.showMessageDialog(null, "No such file: " + e.getMessage());
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+
+                frame.repaint();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "File name can't be empty or null");
+            }
+
+
+        });
+        toolkitPanel.getContentPane().add(loadUserClass);
+    }
+
+    private void addSaveFigureButton() {
+        JButton saveAsUserClass = new JButton("Save figure");
+        saveAsUserClass.setBounds(150, 230, BUTTON_WIDTH + 50, BUTTON_HEIGHT);
+        saveAsUserClass.setLayout(null);
+
+        saveAsUserClass.addActionListener(event -> {
+            String message = JOptionPane.showInputDialog(ENTER_FIGURE_NAME);
+
+            if ((message != null) && (!message.isEmpty())) {
+                try {
+
+                    bsonWorker.serializeToFile(frame.getDrawPanel().getFigureList(), "classes/" + message);
+                    JOptionPane.showMessageDialog(null, "Success");
+
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                }
+
+
+            } else {
+                JOptionPane.showMessageDialog(null, "File name can't be empty or null");
+            }
+
+        });
+
+        toolkitPanel.getContentPane().add(saveAsUserClass);
     }
 
     private void addClearAllButton() {
@@ -114,13 +187,22 @@ public class Initializer {
 
             if ((message != null) && (!message.isEmpty())) {
                 try {
-                    frame.getDrawPanel().setArrayList(bsonWorker.deserializeFromFile(message));
+                    FigureList arrayList = bsonWorker.deserializeFromFile(message);
+
+
+                    frame.getDrawPanel().setArrayList(arrayList);
+                    JOptionPane.showMessageDialog(null, "Success");
+
+                } catch (InvalidTypeIdException e) {
+                    JOptionPane.showMessageDialog(null, "Unable to find required plugins." +
+                            "\nPlease check the connected plugins.");
+                } catch (NoSuchFileException e) {
+                    JOptionPane.showMessageDialog(null, "No such file: " + e.getMessage());
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
 
                 frame.repaint();
-                JOptionPane.showMessageDialog(null, "Success");
 
             } else {
                 JOptionPane.showMessageDialog(null, "File name can't be empty or null");
@@ -141,12 +223,15 @@ public class Initializer {
 
             if ((message != null) && (!message.isEmpty())) {
                 try {
+
                     bsonWorker.serializeToFile(frame.getDrawPanel().getFigureList(), message);
+                    JOptionPane.showMessageDialog(null, "Success");
+
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
                 }
 
-                JOptionPane.showMessageDialog(null, "Success");
+
             } else {
                 JOptionPane.showMessageDialog(null, "File name can't be empty or null");
             }

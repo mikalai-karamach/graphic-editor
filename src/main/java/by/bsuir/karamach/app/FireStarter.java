@@ -17,8 +17,6 @@ public class FireStarter {
 
         List<Class> plugins = pluginLoader.loadPlugins();
 
-        plugins.remove(plugins.get(0));
-
         Initializer initializer = context.getBean(Initializer.class);
         initializer.initGUI(plugins);
     }
