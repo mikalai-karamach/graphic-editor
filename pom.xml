@@ -23,7 +23,7 @@
 
 
     <properties>
-        <loggers.version>2.11.2</loggers.version>
+        <loggers.version>2.15.0</loggers.version>
         <spring.framework.version>5.1.5.RELEASE</spring.framework.version>
     </properties>
 
